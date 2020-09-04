@@ -20,25 +20,42 @@ namespace training_sharepoint
             var securePassword = new SecureString();
             password.ToCharArray().ToList().ForEach(c => securePassword.AppendChar(c));
 
-            using(var context = new ClientContext(site))
+            //using(var context = new ClientContext(site))
+            //{
+
+            //    context.Credentials = new SharePointOnlineCredentials(userName, securePassword);
+            //    ListCreationInformation lci = new ListCreationInformation
+            //    {
+            //        Description = "Library used to hold Dynamics CRM documents",
+            //        Title = "Test",
+            //        TemplateType = 101,
+
+            //    };
+
+            //    List lib = context.Web.Lists.Add(lci);
+            //    lib.ContentTypesEnabled = true;
+            //    lib.Update();
+            //    context.Load(lib);
+            //    context.ExecuteQuery();
+            //}
+
+            var authenticationManager = new OfficeDevPnP.Core.AuthenticationManager();
+
+            ClientContext context = authenticationManager.GetWebLoginClientContext(site.ToString(), null);
+
+            ListCreationInformation lci = new ListCreationInformation
             {
+                Description = "Library used to hold Dynamics CRM documents",
+                Title = "Test",
+                TemplateType = 101,
 
-                context.Credentials = new SharePointOnlineCredentials(userName, securePassword);
-                context.RequestTimeout = -1;
-                ListCreationInformation lci = new ListCreationInformation
-                {
-                    Description = "Library used to hold Dynamics CRM documents",
-                    Title = "Test",
-                    TemplateType = 101,
+            };
 
-                };
-
-                List lib = context.Web.Lists.Add(lci);
-                lib.ContentTypesEnabled = true;
-                lib.Update();
-                context.Load(lib);
-                context.ExecuteQuery();
-            }
+            List lib = context.Web.Lists.Add(lci);
+            lib.ContentTypesEnabled = true;
+            lib.Update();
+            context.Load(lib);
+            context.ExecuteQuery();
         }
     }
 }
