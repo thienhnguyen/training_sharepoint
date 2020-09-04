@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharePoint", "SharePoint\SharePoint.csproj", "{E0B59967-990A-430C-99C2-80C45A89F491}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "training_sharepoint", "training_sharepoint\training_sharepoint.csproj", "{10627FB3-4C25-429F-AB0B-4A0D680C12BC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{E0B59967-990A-430C-99C2-80C45A89F491}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E0B59967-990A-430C-99C2-80C45A89F491}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E0B59967-990A-430C-99C2-80C45A89F491}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E0B59967-990A-430C-99C2-80C45A89F491}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10627FB3-4C25-429F-AB0B-4A0D680C12BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10627FB3-4C25-429F-AB0B-4A0D680C12BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10627FB3-4C25-429F-AB0B-4A0D680C12BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10627FB3-4C25-429F-AB0B-4A0D680C12BC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {ADA92343-46C1-4A7C-AAF7-5B96F07B2A70}
+		SolutionGuid = {497B653F-5F2A-4AA3-BF2C-32E7AD199FAD}
 	EndGlobalSection
 EndGlobal

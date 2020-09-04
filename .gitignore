@@ -15,3 +15,5 @@ TestResult.xml
 Version.cs
 Version.h
 Version.cpp
+/.vs/SharePoint/DesignTimeBuild
+/packages/Microsoft.SharePointOnline.CSOM.16.1.20412.12000
