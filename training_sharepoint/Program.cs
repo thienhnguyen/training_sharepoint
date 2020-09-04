@@ -17,8 +17,11 @@ namespace training_sharepoint
             string userName = "thienhnguyen@thienhnguyen.onmicrosoft.com";
             var password = "{S$t5rN$";
 
-            var listDocName = "SharePoint API";
-            var contentTypeName = "Project Documents Library";
+            var docLibraryName = "SharePoint API Document Library";
+            var liName = "SharePoint API List";
+
+            var docLibContentTypeName = "Project Documents Library";
+            var liContentTypeName = "Employees";
 
             var securePassword = new SecureString();
             password.ToCharArray().ToList().ForEach(c => securePassword.AppendChar(c));
@@ -26,21 +29,7 @@ namespace training_sharepoint
             #region Authentication
             //using(var context = new ClientContext(site))
             //{
-
             //    context.Credentials = new SharePointOnlineCredentials(userName, securePassword);
-            //    ListCreationInformation lci = new ListCreationInformation
-            //    {
-            //        Description = "Library used to hold Dynamics CRM documents",
-            //        Title = "Test",
-            //        TemplateType = 101,
-
-            //    };
-
-            //    List lib = context.Web.Lists.Add(lci);
-            //    lib.ContentTypesEnabled = true;
-            //    lib.Update();
-            //    context.Load(lib);
-            //    context.ExecuteQuery();
             //}
 
             var authenticationManager = new OfficeDevPnP.Core.AuthenticationManager();
@@ -48,21 +37,28 @@ namespace training_sharepoint
 
             #endregion
 
-            #region Create New Document List
+            #region Create new Document Library and new List
             ListCreationInformation lci = new ListCreationInformation
             {
-                Title = listDocName,
+                Title = docLibraryName,
                 TemplateType = 101,
-
             };
-
             List lib = context.Web.Lists.Add(lci);
             lib.ContentTypesEnabled = true;
+
+            lci = new ListCreationInformation
+            {
+                Title = liName,
+                TemplateType = 100,
+            };
+            lib = context.Web.Lists.Add(lci);
+            lib.ContentTypesEnabled = true;
+
             lib.Update();
 
             #endregion
 
-            #region Add Content Type to List
+            #region Add Content Type to Document Library
             ContentTypeCollection contentTypeCollection;
 
             contentTypeCollection = context.Site.RootWeb.ContentTypes;
@@ -70,19 +66,32 @@ namespace training_sharepoint
             context.Load(contentTypeCollection);
             context.ExecuteQuery();
 
-            ContentType targetContentType = (from c in contentTypeCollection
-                                             where c.Name == contentTypeName
+            ContentType docLibContentType = (from c in contentTypeCollection
+                                             where c.Name == docLibContentTypeName
                                              select c).FirstOrDefault();
 
-            List targetList = context.Web.Lists.GetByTitle(listDocName);
-            targetList.ContentTypes.AddExistingContentType(targetContentType);
-            targetList.Update();
+            List targetDocLib = context.Web.Lists.GetByTitle(docLibraryName);
+            targetDocLib.ContentTypes.AddExistingContentType(docLibContentType);
+            targetDocLib.Update();
 
             context.Web.Update();
 
             #endregion
 
+            #region Add Content Type to List
+            ContentType liContentType = (from c in contentTypeCollection
+                                             where c.Name == liContentTypeName
+                                             select c).FirstOrDefault();
+
+            List targetList = context.Web.Lists.GetByTitle(liName);
+            targetList.ContentTypes.AddExistingContentType(liContentType);
+            targetList.Update();
+
+            context.Web.Update();
+            #endregion
             context.ExecuteQuery();
+
+            //https://www.c-sharpcorner.com/UploadFile/sagarp/create-update-delete-a-list-using-client-object-model-cso/
         }
     }
 }
