@@ -21,9 +21,10 @@ namespace training_sharepoint
          
         public static SecureString SECURE_PASSWORD = new SecureString();
 
-        static public void SecureString()
+        static public SecureString SecurePasswordString()
         {
             PASSWORD.ToCharArray().ToList().ForEach(c => SECURE_PASSWORD.AppendChar(c));
+            return SECURE_PASSWORD;
         }
     }
 }

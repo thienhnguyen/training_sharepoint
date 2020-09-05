@@ -27,9 +27,9 @@ namespace training_sharepoint
             //List
             var li = new EmpList(context);
             //li.CreateList();
-            //li.AddData();
+            li.AddData();
             //li.EditData(1);
-            li.DeleteData(4);
+            //li.DeleteData(4);
 
             context.ExecuteQuery();
 
