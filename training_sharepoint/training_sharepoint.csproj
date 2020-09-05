@@ -225,6 +225,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Authentication.cs" />
+    <Compile Include="Constants.cs" />
+    <Compile Include="Lists\DocumentLibrary.cs" />
+    <Compile Include="Models\Employee.cs" />
+    <Compile Include="Lists\EmpList.cs" />
+    <Compile Include="Models\MockData.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
