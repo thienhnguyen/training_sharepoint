@@ -27,6 +27,7 @@ namespace training_sharepoint
             //List
             var li = new EmpList(context);
             //li.CreateList();
+            //li.GetData();
             li.AddData();
             //li.EditData(1);
             //li.DeleteData(4);
@@ -34,6 +35,8 @@ namespace training_sharepoint
             context.ExecuteQuery();
 
             Console.WriteLine("Success");
+
+            Console.ReadLine();
         }
     }
 }
