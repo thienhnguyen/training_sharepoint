@@ -61,7 +61,7 @@ namespace training_sharepoint.Lists
 
             foreach (ListItem item in listItem)
             {
-                Console.WriteLine(item["FirstName"].ToString());
+                Console.WriteLine(item["ID"].ToString());
             }
         }
 
@@ -96,5 +96,5 @@ namespace training_sharepoint.Lists
             ListItem listItem = targetList.GetItemById(id);
             listItem.DeleteObject();
         }
-	}
+    }
 }

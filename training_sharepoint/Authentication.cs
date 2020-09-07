@@ -17,6 +17,7 @@ namespace training_sharepoint
                 return context;
             }
 
+            //If Default Security of Azure Enabled, use this:
             //var authenticationManager = new OfficeDevPnP.Core.AuthenticationManager();
             //ClientContext context = authenticationManager.GetWebLoginClientContext(Constants.SITE_URL.ToString(), null);
             //return context;
