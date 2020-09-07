@@ -16,6 +16,7 @@ namespace training_sharepoint.Lists
         {
             _context = context;
         }
+
         public void CreateList()
         {
             //Create list
@@ -48,10 +49,26 @@ namespace training_sharepoint.Lists
             _context.Web.Update();
         }
 
+        public void GetData()
+        {
+            CamlQuery query = CamlQuery.CreateAllItemsQuery();
+
+            List targetList = _context.Web.Lists.GetByTitle(Constants.LI_NAME);
+            ListItemCollection listItem = targetList.GetItems(query);
+
+            _context.Load(listItem);
+            _context.ExecuteQuery();
+
+            foreach (ListItem item in listItem)
+            {
+                Console.WriteLine(item["ID"].ToString());
+            }
+        }
+
         public void AddData()
         {
             var data = new MockData();
-            
+
             foreach (var item in data.EmpMockData())
             {
                 ListItemCreationInformation listCreationInformation = new ListItemCreationInformation();
@@ -79,5 +96,5 @@ namespace training_sharepoint.Lists
             ListItem listItem = targetList.GetItemById(id);
             listItem.DeleteObject();
         }
-	}
+    }
 }
