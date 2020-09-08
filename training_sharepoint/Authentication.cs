@@ -11,7 +11,7 @@ namespace training_sharepoint
 	{
         public static ClientContext GetAuthentication()
         {
-            using (var context = new ClientContext(Constants.SITE_URL))
+            using (var context = new ClientContext(Constants.SITE_URL + Constants.SITE_COLLECTION))
             {
                 context.Credentials = new SharePointOnlineCredentials(Constants.USERNAME, Constants.SecurePasswordString());
                 return context;

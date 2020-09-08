@@ -9,12 +9,16 @@ namespace training_sharepoint
 {
     public static class Constants
     {
-        static public readonly string SITE_URL = "https://thienhnguyen.sharepoint.com/sites/Home/Hr";
+        static public readonly string SITE_URL = "https://thienhnguyen.sharepoint.com";
+        static public readonly string SITE_ADMIN_URL = "https://thienhnguyen-admin.sharepoint.com";
+        static public readonly string SITE_COLLECTION = @"/sites/Thnit";
+        static public readonly string SUBSITE = @"/Hr";
+
         static public readonly string USERNAME = "thienhnguyen@thienhnguyen.onmicrosoft.com";
         static public readonly string PASSWORD = "{S$t5rN$";
 
-        static public readonly string DOC_LIB_NAME = "SharePoint API Document Library";
-        static public readonly string LI_NAME = "SharePoint API List";
+        static public readonly string DOC_LIB_NAME = "IT Documents";
+        static public readonly string LI_NAME = "IT List";
 
         static public readonly string DOC_LIB_CONT_NAME = "Project Documents Library";
         static public readonly string LI_CONT_NAME = "Employees";

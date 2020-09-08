@@ -227,16 +227,19 @@
   <ItemGroup>
     <Compile Include="Authentication.cs" />
     <Compile Include="Constants.cs" />
-    <Compile Include="Lists\DocumentLibrary.cs" />
+    <Compile Include="Content Types\ITContentType.cs" />
+    <Compile Include="Fields\ITField.cs" />
     <Compile Include="Models\Employee.cs" />
-    <Compile Include="Lists\EmpList.cs" />
+    <Compile Include="Lists\ITList.cs" />
     <Compile Include="Models\MockData.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sites\ITSite.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
