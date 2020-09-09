@@ -14,16 +14,15 @@ namespace training_sharepoint.Sites
     {
         private ClientContext _context { get; set; }
 
-        public ITSite(ClientContext context)
+        public ITSite()
         {
-            _context = context;
         }
 
         public void CreateSite()
         {
             using (ClientContext tenantContext = new ClientContext(Constants.SITE_ADMIN_URL))
             {
-                tenantContext.Credentials = new SharePointOnlineCredentials(Constants.USERNAME, Constants.SECURE_PASSWORD);
+                tenantContext.Credentials = new SharePointOnlineCredentials(Constants.USERNAME, Constants.SecurePasswordString());
 
                 var tenant = new Tenant(tenantContext);
 
@@ -71,6 +70,26 @@ namespace training_sharepoint.Sites
 
                 Console.WriteLine("SiteCollection Created.");
             }
+        }
+
+        public void CreateSubSite(ClientContext context)
+        {
+            WebCreationInformation webCreationInformation = new WebCreationInformation
+            {
+                // This is relative URL of the url provided in context
+                Url = Constants.SUBSITE,
+                Title = "HR Subsite",
+
+                // This will inherit permission from parent site
+                UseSamePermissionsAsParentSite = true,
+
+                // "STS#0" is the code for 'Team Site' template
+                WebTemplate = "STS#0"
+            };
+
+            context.Site.RootWeb.Webs.Add(webCreationInformation);
+
+            context.ExecuteQuery();
         }
     }
 }

@@ -11,37 +11,12 @@ namespace training_sharepoint.Content_Types
     {
         private ClientContext _context { get; set; }
 
-        private readonly string[] empFields = new string[]
-        {
-            "ITEmpFirstName",
-            "ITEmpLastName",
-            "ITEmpEmail",
-            "ITEmpShortDescription",
-            "ITEmpProgrammingLanguages"
-        };
-        private readonly string[] projectFields = new string[]
-        {
-            "ITProjectName",
-            "ITProjectStartDate",
-            "ITProjectEndDate",
-            "ITProjectDescription",
-            "ITProjectState"
-        };
-        private readonly string[] docFields = new string[]
-        {
-            "ITDocTitle",
-            "ITDocDescription",
-            "ITDocLinkedProjectItem",
-            "ITProjectDescription",
-            "ITDocTypeOfDoc"
-        };
-
         public ITContentType(ClientContext context)
         {
             _context = context;
         }
 
-        public void CreateContentType()
+        public void CreateContentType(string contentTypeName, string parentContentTypeName)
         {
             ContentTypeCollection collection = _context.Site.RootWeb.ContentTypes;
 
@@ -49,104 +24,49 @@ namespace training_sharepoint.Content_Types
             _context.ExecuteQuery();
 
             //Emp
-            ContentType empParentContentType = (from c in collection
-                                             where c.Name == "Item"
+            ContentType parentContentType = (from c in collection
+                                             where c.Name == parentContentTypeName
                                              select c).FirstOrDefault();
 
-            ContentTypeCreationInformation empContentType = new ContentTypeCreationInformation
+            ContentTypeCreationInformation contentType = new ContentTypeCreationInformation
             {
-                Name = "IT Employees",
+                Name = contentTypeName,
                 Group = "IT Content Type",
-                ParentContentType = empParentContentType
+                ParentContentType = parentContentType
             };
 
-            //Project
-            ContentType projParentContentType = (from c in collection
-                                 where c.Name == "Item"
-                                 select c).FirstOrDefault();
-
-            ContentTypeCreationInformation projContentType = new ContentTypeCreationInformation
-            {
-                Name = "IT Projects",
-                Group = "IT Content Type",
-                ParentContentType = projParentContentType
-            };
-
-            //Doc
-            ContentType docParentContentType = (from c in collection
-                                                 where c.Name == "Document"
-                                                select c).FirstOrDefault();
-
-            ContentTypeCreationInformation docContentType = new ContentTypeCreationInformation
-            {
-                Name = "IT Documents",
-                Group = "IT Content Type",
-                ParentContentType = docParentContentType
-            };
-
-            collection.Add(empContentType);
-            collection.Add(projContentType);
-            collection.Add(docContentType);
+            collection.Add(contentType);
 
             _context.ExecuteQuery();
         }
 
-        public void AddFieldToContentType()
+        public void AddFieldToContentType(string contentTypeName, string[] fields)
         {
             // Get all the content types from current site
             ContentTypeCollection collection = _context.Site.RootWeb.ContentTypes;
             _context.Load(collection);
             _context.ExecuteQuery();
 
-            // Emp
-            ContentType empContentType = (from c in collection
-                                          where c.Name == "IT Employees"
+            ContentType contentType = (from c in collection
+                                          where c.Name == contentTypeName
                                           select c).FirstOrDefault();
 
-            foreach (var item in empFields)
+            foreach (var item in fields)
             {
+                if (item.Contains("Leader") || item.Contains("Members"))
+                {
+                    continue;
+                }
                 Field targetField = _context.Web.AvailableFields.GetByInternalNameOrTitle(item);
-                FieldLinkCreationInformation fldLink = new FieldLinkCreationInformation();
-                fldLink.Field = targetField;
+                FieldLinkCreationInformation fldLink = new FieldLinkCreationInformation
+                {
+                    Field = targetField
+                };
                 fldLink.Field.Required = false;
                 fldLink.Field.Hidden = false;
 
-                empContentType.FieldLinks.Add(fldLink);
-                empContentType.Update(false);
-            }
-
-            // Project
-            ContentType projContentType = (from c in collection
-                              where c.Name == "IT Projects"
-                              select c).FirstOrDefault();
-
-            foreach (var item in projectFields)
-            {
-                Field targetField = _context.Web.AvailableFields.GetByInternalNameOrTitle(item);
-                FieldLinkCreationInformation fldLink = new FieldLinkCreationInformation();
-                fldLink.Field = targetField;
-                fldLink.Field.Required = false;
-                fldLink.Field.Hidden = false;
-
-                projContentType.FieldLinks.Add(fldLink);
-                projContentType.Update(false);
-            }
-
-            // Doc
-            ContentType docContentType = (from c in collection
-                              where c.Name == "IT Documents"
-                              select c).FirstOrDefault();
-
-            foreach (var item in docFields)
-            {
-                Field targetField = _context.Web.AvailableFields.GetByInternalNameOrTitle(item);
-                FieldLinkCreationInformation fldLink = new FieldLinkCreationInformation();
-                fldLink.Field = targetField;
-                fldLink.Field.Required = false;
-                fldLink.Field.Hidden = false;
-
-                docContentType.FieldLinks.Add(fldLink);
-                docContentType.Update(false);
+                contentType.FieldLinks.Add(fldLink);
+                contentType.Update(false);
             }
         }
     }

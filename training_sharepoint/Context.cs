@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace training_sharepoint
 {
-	public static class Authentication
+	public static class Context
 	{
-        public static ClientContext GetAuthentication()
+        public static ClientContext GetClientContext(string url)
         {
-            using (var context = new ClientContext(Constants.SITE_URL + Constants.SITE_COLLECTION))
+            using (var context = new ClientContext(url))
             {
                 context.Credentials = new SharePointOnlineCredentials(Constants.USERNAME, Constants.SecurePasswordString());
                 return context;
