@@ -48,8 +48,8 @@ namespace training_sharepoint.Content_Types
             _context.ExecuteQuery();
 
             ContentType contentType = (from c in collection
-                                          where c.Name == contentTypeName
-                                          select c).FirstOrDefault();
+                                       where c.Name == contentTypeName
+                                       select c).FirstOrDefault();
 
             foreach (var item in fields)
             {
