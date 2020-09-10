@@ -12,8 +12,10 @@ namespace training_sharepoint.Models
 
 		public string LastName { get; set; }
 
-		public string Email { get; set; }
+		public string EmailAddress { get; set; }
 
-		public string PhoneNumber { get; set; }
+		public string ShortDescription { get; set; }
+
+		public string[] ProgrammingLanguage { get; set; }
 	}
 }

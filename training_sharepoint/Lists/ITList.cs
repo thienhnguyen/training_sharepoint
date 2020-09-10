@@ -61,22 +61,7 @@ namespace training_sharepoint.Lists
         //    }
         //}
 
-        //public void AddData()
-        //{
-        //    var data = new MockData();
 
-        //    foreach (var item in data.EmpMockData())
-        //    {
-        //        ListItemCreationInformation listCreationInformation = new ListItemCreationInformation();
-        //        List targetList = _context.Web.Lists.GetByTitle(Constants.LI_NAME);
-        //        ListItem listItem = targetList.AddItem(listCreationInformation);
-        //        listItem["FirstName"] = item.FirstName;
-        //        listItem["Last_x0020_Name"] = item.LastName;
-        //        listItem["EMail"] = item.Email;
-        //        listItem["CellPhone"] = item.PhoneNumber;
-        //        listItem.Update();
-        //    }
-        //}
 
         //public void EditData(int id)
         //{
