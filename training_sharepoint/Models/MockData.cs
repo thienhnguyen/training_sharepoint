@@ -1,8 +1,10 @@
 ﻿using Microsoft.ProjectServer.Client;
 using Microsoft.SharePoint.Client;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel.Syndication;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -55,22 +57,80 @@ namespace training_sharepoint.Models
 
         public void AddDataToProjectsList(string projList)
         {
-
-            foreach (var item in this.projList)
+            foreach (var projItem in this.projList)
             {
                 ListItemCreationInformation listCreationInformation = new ListItemCreationInformation();
                 List targetList = _context.Web.Lists.GetByTitle(projList);
                 ListItem listItem = targetList.AddItem(listCreationInformation);
-                listItem["ITProjectName"] = item.ProjectName;
-                listItem["Leader"] = item.Leader;
-                listItem["Members"] = item.Members;
-                listItem["ITProjectStartDate"] = item.StartDate;
-                listItem["ITProjectEndDate"] = item.EndDate;
-                listItem["ITProjectDescription"] = item.Description;
-                listItem["ITProjectState"] = item.State;
+
+                var lookUpValues = new ArrayList();
+
+                foreach (var iProjectItem in projItem.Leader)
+                {
+                    lookUpValues.Add(GetLookupValue(iProjectItem, "ITEmpFirstName", "text", "IT Employees List"));
+                }
+                listItem["Leader"] = lookUpValues.ToArray();
+
+                listItem.Update();
+
+                foreach (var iProjectItem in projItem.Members)
+                {
+                    lookUpValues.Add(GetLookupValue(iProjectItem, "ITEmpFirstName", "text", "IT Employees List"));
+                }
+                listItem["Members"] = lookUpValues.ToArray();
+
+                listItem["ITProjectName"] = projItem.ProjectName;
+                listItem["ITProjectStartDate"] = projItem.StartDate;
+                listItem["ITProjectEndDate"] = projItem.EndDate;
+                listItem["ITProjectDescription"] = projItem.Description;
+                listItem["ITProjectState"] = projItem.State;
 
                 listItem.Update();
             }
+        }
+
+        public FieldLookupValue GetLookupValue(string value, string lookupFieldName, string lookupFieldType, string lookupListName)
+        {
+            List list = null;
+            FieldLookupValue lookupValue = null;
+
+            list = _context.Site.RootWeb.Lists.GetByTitle(lookupListName);
+
+            if (list != null)
+            {
+                CamlQuery camlQueryForItem = new CamlQuery
+                {
+                    ViewXml = string.Format(@"
+                    <View>
+                        <Query>
+                            <Where>
+                                <Eq>
+                                    <FieldRef Name='{0}'/>
+                                    <Value Type='{1}'>{2}</Value>
+                                </Eq>
+                            </Where>
+                        </Query>
+                    </View>",
+                    lookupFieldName, lookupFieldType, value)
+                };
+
+                ListItemCollection listItems = list.GetItems(camlQueryForItem);
+                _context.Load(listItems, items => items.Include
+                                                  (listItem => listItem["ID"],
+                                                   listItem => listItem[lookupFieldName]));
+                _context.ExecuteQuery();
+
+                if (listItems != null)
+                {
+                    ListItem item = listItems[0];
+                    lookupValue = new FieldLookupValue
+                    {
+                        LookupId = int.Parse(item["ID"].ToString()),
+                    };
+                }
+            }
+
+            return lookupValue;
         }
     }
 }

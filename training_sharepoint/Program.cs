@@ -84,7 +84,7 @@ namespace training_sharepoint
                 Console.WriteLine("3. Create a new Documents Library to your site");
                 Console.WriteLine("4. Create a new Site with the lists above");
                 Console.WriteLine("5. Add mock data to Employees List");
-                Console.WriteLine("6. Add mock data to Projects List (In-development)");
+                Console.WriteLine("6. Add mock data to Projects List");
                 Console.WriteLine();
                 Console.WriteLine("---------------------------------------------------------------------");
             }
@@ -93,218 +93,215 @@ namespace training_sharepoint
             {
                 string opt;
                 string url;
-                do
+                Display();
+                opt = Console.ReadLine().Trim();
+                Console.Clear();
+                switch (opt)
                 {
-                    Display();
-                    opt = Console.ReadLine().Trim();
-                    Console.Clear();
-                    switch (opt)
-                    {
-                        case "1":
-                            Console.Write("Please input your site url: ");
+                    case "1":
+                        Console.Write("Please input your site url: ");
 
-                            url = Console.ReadLine().Trim();
+                        url = Console.ReadLine().Trim();
 
-                            Console.WriteLine("Please Wait...");
+                        Console.WriteLine("Please Wait...");
 
-                            ClientContext context = Context.GetClientContext(url.Trim());
-                            //Field
-                            var fi = new ITField(context);
-                            fi.CreateField("emp");
+                        ClientContext context = Context.GetClientContext(url.Trim());
+                        //Field
+                        var fi = new ITField(context);
+                        fi.CreateField("emp");
 
-                            //Content Type
-                            var ct = new ITContentType(context);
-                            ct.CreateContentType(empContentType, "Item");
-                            ct.AddFieldToContentType(empContentType, empFields);
+                        //Content Type
+                        var ct = new ITContentType(context);
+                        ct.CreateContentType(empContentType, "Item");
+                        ct.AddFieldToContentType(empContentType, empFields);
 
-                            //List
-                            var li = new ITList(context);
-                            li.CreateListAndLib(empList, 100, empContentType);
+                        //List
+                        var li = new ITList(context);
+                        li.CreateListAndLib(empList, 100, empContentType);
 
-                            //View
-                            var view = new ITView(context);
-                            view.CreateView(empList, "IT Employees View", empFields);
+                        //View
+                        var view = new ITView(context);
+                        view.CreateView(empList, "IT Employees View", empFields);
 
-                            context.ExecuteQuery();
+                        context.ExecuteQuery();
 
-                            Console.WriteLine("Finish! Happy Play :)))))");
-                            System.Threading.Thread.Sleep(5000);
-                            Console.Clear();
+                        Console.WriteLine("Finish! Happy Play :)))))");
+                        System.Threading.Thread.Sleep(5000);
+                        Console.Clear();
 
-                            break;
-                        case "2":
-                            Console.Write("Please input your site url: ");
+                        break;
+                    case "2":
+                        Console.Write("Please input your site url: ");
 
-                            url = Console.ReadLine().Trim();
+                        url = Console.ReadLine().Trim();
 
-                            Console.WriteLine("Please Wait...");
+                        Console.WriteLine("Please Wait...");
 
-                            context = Context.GetClientContext(url.Trim());
-                            //Field
-                            fi = new ITField(context);
-                            fi.CreateField("proj");
+                        context = Context.GetClientContext(url.Trim());
+                        //Field
+                        fi = new ITField(context);
+                        fi.CreateField("proj");
 
-                            //Content Type
-                            ct = new ITContentType(context);
-                            ct.CreateContentType(projContentType, "Item");
-                            ct.AddFieldToContentType(projContentType, projectFields);
+                        //Content Type
+                        ct = new ITContentType(context);
+                        ct.CreateContentType(projContentType, "Item");
+                        ct.AddFieldToContentType(projContentType, projectFields);
 
-                            //List
-                            li = new ITList(context);
-                            li.CreateListAndLib(projList, 100, projContentType);
-                            fi.CreateLookupField();
+                        //List
+                        li = new ITList(context);
+                        li.CreateListAndLib(projList, 100, projContentType);
+                        fi.CreateLookupField();
 
-                            //View
-                            view = new ITView(context);
-                            view.CreateView(projList, "IT Projects View", projectFields);
+                        //View
+                        view = new ITView(context);
+                        view.CreateView(projList, "IT Projects View", projectFields);
 
-                            context.ExecuteQuery();
+                        context.ExecuteQuery();
 
-                            Console.WriteLine("Finish! Happy Play :)))))");
-                            System.Threading.Thread.Sleep(5000);
-                            Console.Clear();
+                        Console.WriteLine("Finish! Happy Play :)))))");
+                        System.Threading.Thread.Sleep(5000);
+                        Console.Clear();
 
-                            break;
-                        case "3":
-                            Console.Write("Please input your site url: ");
+                        break;
+                    case "3":
+                        Console.Write("Please input your site url: ");
 
-                            url = Console.ReadLine().Trim();
+                        url = Console.ReadLine().Trim();
 
-                            Console.WriteLine("Please Wait...");
+                        Console.WriteLine("Please Wait...");
 
-                            context = Context.GetClientContext(url.Trim());
-                            //Field
-                            fi = new ITField(context);
-                            fi.CreateField("doc");
+                        context = Context.GetClientContext(url.Trim());
+                        //Field
+                        fi = new ITField(context);
+                        fi.CreateField("doc");
 
-                            //Content Type
-                            ct = new ITContentType(context);
-                            ct.CreateContentType(docContentype, "Document");
-                            ct.AddFieldToContentType(docContentype, docFields);
+                        //Content Type
+                        ct = new ITContentType(context);
+                        ct.CreateContentType(docContentype, "Document");
+                        ct.AddFieldToContentType(docContentype, docFields);
 
-                            //List
-                            li = new ITList(context);
-                            li.CreateListAndLib(docLib, 101, docContentype);
+                        //List
+                        li = new ITList(context);
+                        li.CreateListAndLib(docLib, 101, docContentype);
 
-                            //View
-                            view = new ITView(context);
-                            view.CreateView(docLib, "IT Documents View", docFields);
+                        //View
+                        view = new ITView(context);
+                        view.CreateView(docLib, "IT Documents View", docFields);
 
-                            context.ExecuteQuery();
+                        context.ExecuteQuery();
 
-                            Console.WriteLine("Finish! Happy Play :)))))");
-                            System.Threading.Thread.Sleep(5000);
-                            Console.Clear();
+                        Console.WriteLine("Finish! Happy Play :)))))");
+                        System.Threading.Thread.Sleep(5000);
+                        Console.Clear();
 
-                            break;
-                        case "4":
-                            Console.WriteLine("Default site name: IT Site create from CSOM");
-                            Console.Write("or Change it if you want: ");
+                        break;
+                    case "4":
+                        Console.WriteLine("Default site name: IT Site create from CSOM");
+                        Console.Write("or Change it if you want: ");
 
-                            var siteName = Console.ReadLine().Trim();
-                            string siteAddress;
+                        var siteName = Console.ReadLine().Trim();
+                        string siteAddress;
 
-                            Console.WriteLine("Please Wait...");
+                        Console.WriteLine("Please Wait...");
 
-                            //Site
-                            var site = new ITSite();
-                            if (string.IsNullOrEmpty(siteName))
-                            {
-                                site.CreateSite(out siteAddress);
-                            }
-                            else
-                            {
-                                site.CreateSite(out siteAddress, siteName);
-                            }
+                        //Site
+                        var site = new ITSite();
+                        if (string.IsNullOrEmpty(siteName))
+                        {
+                            site.CreateSite(out siteAddress);
+                        }
+                        else
+                        {
+                            site.CreateSite(out siteAddress, siteName);
+                        }
 
-                            Console.WriteLine("Please be patient... Few more seconds :)))");
+                        Console.WriteLine("Please be patient... Few more seconds :)))");
 
-                            //Get context
-                            context = Context.GetClientContext(Constants.SITE_URL + "/sites/" + siteAddress);
+                        //Get context
+                        context = Context.GetClientContext(Constants.SITE_URL + "/sites/" + siteAddress);
 
-                            #region Sub Site
-                            //Sub Site
-                            site.CreateSubSite(context);
+                        #region Sub Site
+                        //Sub Site
+                        site.CreateSubSite(context);
 
-                            context = Context.GetClientContext(Constants.SITE_URL + "/sites/" + siteAddress + "/" + Constants.SUBSITE);
-                            #endregion
+                        context = Context.GetClientContext(Constants.SITE_URL + "/sites/" + siteAddress + "/" + Constants.SUBSITE);
+                        #endregion
 
-                            //Field
-                            fi = new ITField(context);
-                            fi.CreateField("emp");
-                            fi.CreateField("proj");
-                            fi.CreateField("doc");
+                        //Field
+                        fi = new ITField(context);
+                        fi.CreateField("emp");
+                        fi.CreateField("proj");
+                        fi.CreateField("doc");
 
 
-                            //Content Type
-                            ct = new ITContentType(context);
-                            ct.CreateContentType(empContentType, "Item");
-                            ct.CreateContentType(projContentType, "Item");
-                            ct.CreateContentType(docContentype, "Document");
+                        //Content Type
+                        ct = new ITContentType(context);
+                        ct.CreateContentType(empContentType, "Item");
+                        ct.CreateContentType(projContentType, "Item");
+                        ct.CreateContentType(docContentype, "Document");
 
-                            ct.AddFieldToContentType(empContentType, empFields);
-                            ct.AddFieldToContentType(projContentType, projectFields);
-                            ct.AddFieldToContentType(docContentype, docFields);
+                        ct.AddFieldToContentType(empContentType, empFields);
+                        ct.AddFieldToContentType(projContentType, projectFields);
+                        ct.AddFieldToContentType(docContentype, docFields);
 
-                            //List
-                            li = new ITList(context);
-                            li.CreateListAndLib(empList, 100, empContentType);
-                            li.CreateListAndLib(projList, 100, projContentType);
-                            li.CreateListAndLib(docLib, 101, docContentype);
+                        //List
+                        li = new ITList(context);
+                        li.CreateListAndLib(empList, 100, empContentType);
+                        li.CreateListAndLib(projList, 100, projContentType);
+                        li.CreateListAndLib(docLib, 101, docContentype);
 
-                            fi.CreateLookupField();
+                        fi.CreateLookupField();
 
-                            //View
-                            view = new ITView(context);
-                            view.CreateView(empList, "IT Employees View", empFields);
-                            view.CreateView(projList, "IT Projects View", projectFields);
-                            view.CreateView(docLib, "IT Documents View", docFields);
+                        //View
+                        view = new ITView(context);
+                        view.CreateView(empList, "IT Employees View", empFields);
+                        view.CreateView(projList, "IT Projects View", projectFields);
+                        view.CreateView(docLib, "IT Documents View", docFields);
 
-                            context.ExecuteQuery();
+                        context.ExecuteQuery();
 
-                            Console.WriteLine("Finish! Happy Play :)))))");
-                            System.Threading.Thread.Sleep(5000);
-                            Console.Clear();
+                        Console.WriteLine("Finish! Happy Play :)))))");
+                        System.Threading.Thread.Sleep(5000);
+                        Console.Clear();
 
-                            break;
+                        break;
 
-                        case "5":
-                            Console.WriteLine("Please input your site url having the employees list: ");
+                    case "5":
+                        Console.WriteLine("Please input your site url having the employees list: ");
 
-                            url = Console.ReadLine().Trim();
+                        url = Console.ReadLine().Trim();
 
-                            Console.WriteLine("Please Wait...");
+                        Console.WriteLine("Please Wait...");
 
-                            context = Context.GetClientContext(url.Trim());
+                        context = Context.GetClientContext(url.Trim());
 
-                            var mockData = new MockData(context);
-                            mockData.AddDataToEmployeesList(empList);
-                            context.ExecuteQuery();
+                        var mockData = new MockData(context);
+                        mockData.AddDataToEmployeesList(empList);
+                        context.ExecuteQuery();
 
-                            Console.WriteLine("Finish! Happy Play :)))))");
-                            System.Threading.Thread.Sleep(5000);
-                            Console.Clear();
-                            break;
+                        Console.WriteLine("Finish! Happy Play :)))))");
+                        System.Threading.Thread.Sleep(5000);
+                        Console.Clear();
+                        break;
 
-                        case "6":
-                            Console.WriteLine("Please input your site url having the projects list: ");
+                    case "6":
+                        Console.WriteLine("Please input your site url having the projects list: ");
 
-                            url = Console.ReadLine().Trim();
+                        url = Console.ReadLine().Trim();
 
-                            Console.WriteLine("Please Wait...");
+                        Console.WriteLine("Please Wait...");
 
-                            context = Context.GetClientContext(url.Trim());
+                        context = Context.GetClientContext(url.Trim());
 
-                            mockData = new MockData(context);
-                            mockData.AddDataToProjectsList(projList);
-                            context.ExecuteQuery();
+                        mockData = new MockData(context);
+                        mockData.AddDataToProjectsList(projList);
+                        context.ExecuteQuery();
 
-                            Console.WriteLine("Finish! Happy Play :)))))");
-                            System.Threading.Thread.Sleep(5000);
-                            Console.Clear();
-                            break;
-                    }
-                } while (opt != "0");
+                        Console.WriteLine("Finish! Happy Play :)))))");
+                        System.Threading.Thread.Sleep(5000);
+                        Console.Clear();
+                        break;
+                }
             }
         }
     }
